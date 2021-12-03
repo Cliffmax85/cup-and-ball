@@ -2,17 +2,20 @@
 const cupOne = document.getElementById('cup-one-button');
 const cupTwo = document.getElementById('cup-two-button');
 const cupThree = document.getElementById('cup-three-button');
-const cupOneImg = document.getElementById('cup-one-image');
-const cupTwoImg = document.getElementById('cup-two-image');
-const cupThreeImg = document.getElementById('cup-three-image');
+const cupOneImg = document.getElementById('cup1-image');
+const cupTwoImg = document.getElementById('cup2-image');
+const cupThreeImg = document.getElementById('cup3-image');
 const winsEl = document.getElementById('wins');
 const totalEl = document.getElementById('total');
 const lossesEl = document.getElementById('losses');
+const resetScore = document.getElementById('reset-score'); 
+const resetPics = document.getElementById('reset-styles');
+const resetAll = document.getElementById('reset-all');
 
 const cupPlaces = [
-  'cup1',
-  'cup2',
-  'cup3'
+    'cup1',
+    'cup2',
+    'cup3'
 ];
 
 
@@ -26,50 +29,87 @@ let correctGuesses = 0;
 let totalGuesses = 0;
 
 function getRandomItem(arr) {
-  const index = Math.floor(Math.random() * arr.length);
+    const index = Math.floor(Math.random() * arr.length);
 
-  return arr[index];
+    return arr[index];
 }
 
 function resetStyles() {
-  cupOneImg.src = './assets/cupImg.png';
-  cupTwoImg.src = './assets/cupImg.png';
-  cupThreeImg.src = './assets/cupImg.png';
+    cupOneImg.src = `./assets/cup-image.png`;
+    cupTwoImg.src = `./assets/cup-image.png`;
+    cupThreeImg.src = './assets/cup-image.png';
+}
+
+function resetImagesAndScore() {
+    cupOneImg.src = `./assets/cup-image.png`;
+    cupTwoImg.src = `./assets/cup-image.png`;
+    cupThreeImg.src = './assets/cup-image.png';
+    totalGuesses = 0;
+    correctGuesses = 0;
+    winsEl.textContent = '0';
+    lossesEl.textContent = '0';
+    totalEl.textContent = '0';
+
 }
 
 function handleGuess(userGuess, correctSpot) {
-  resetStyles();
+    resetStyles();
 
-  totalGuesses++;
+    totalGuesses++;
 
-  let correctEl = document.getElementById(`${correctSpot}-image`);
-  correctEl.src="./assets/Screen Shot 2021-11-28 at 8.09.09 PM.png"
+    let correctGuess = document.getElementById(`${correctSpot}-image`);
+    correctGuess.src = './assets/correctCupImg.png';
 
-  if (userGuess === correctSpot) {
-    correctGuesses++;
-  }
+    if (userGuess === correctSpot) {
+        correctGuesses++;
+    }
 
-  totalEl.textContent = totalGuesses;
-  winsEl.textContent = correctGuesses;
-  lossesEl.textContent = totalGuesses - correctGuesses;
+    totalEl.textContent = totalGuesses;
+    winsEl.textContent = correctGuesses;
+    lossesEl.textContent = totalGuesses - correctGuesses;
 
 }
 
+resetScore.addEventListener('click', () => {
+    resetGameScore();
+});
+
+resetPics.addEventListener('click', () => {
+    resetImages();
+});
+
+resetAll.addEventListener('click', () => {
+    resetImagesAndScore();
+});
+
+function resetGameScore() {
+    totalGuesses = 0;
+    correctGuesses = 0;
+    winsEl.textContent = '0';
+    lossesEl.textContent = '0';
+    totalEl.textContent = '0';
+}
+
+function resetImages() {
+    cupOneImg.src = `./assets/cup-image.png`;
+    cupTwoImg.src = `./assets/cup-image.png`;
+    cupThreeImg.src = './assets/cup-image.png';
+}
 
 // set event listeners 
 cupOne.addEventListener('click', () => {
-  const randomButton = getRandomItem(cupPlaces);
-  handleGuess('cup1', randomButton);
+    const randomButton = getRandomItem(cupPlaces);
+    handleGuess('cup1', randomButton);
 });
 
 cupTwo.addEventListener('click', () => {
-  const randomButton = getRandomItem(cupPlaces);
-  handleGuess('cup2', randomButton);
+    const randomButton = getRandomItem(cupPlaces);
+    handleGuess('cup2', randomButton);
 });
 
 cupThree.addEventListener('click', () => {
-  const randomButton = getRandomItem(cupPlaces);
-  handleGuess('cup3', randomButton);
+    const randomButton = getRandomItem(cupPlaces);
+    handleGuess('cup3', randomButton);
 });
 
 
